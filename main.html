@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Fan Fighterz Deckbuilder</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<!-- Optional Bootstrap theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+</head>
+<body>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+		
+	<!-- Intended to look and behave much like the deckbuilder here: https://netrunnerdb.com/-->
+	<div class="container">
+	<div class="row">
+		<h2>Fan Fighterz <small>A print-n-play CCG</small></h2>
+		<p> An introduction to the webpage will go here.</p>
+		<p> A link to the quick-start guide will go here.</p>
+		<p> A link to the comprehensive rules may go here. </p>
+	</div>
+	<div class="row">
+		<div class="col-sm-6 col-md-4">
+			<!-- So the page is meant to maintain a list of cards. The list and the number of cards in it will be displayed here.-->
+			<h2>My Decklist    <small>1/30 cards</small></h2>
+			An example table is included below.
+			<!-- No header included on this table -->
+			<table class="table table-hover table-condensed">
+				<tbody>
+					<tr>
+						<!-- I believe to make them select they need to be made 'stateful buttons' -->
+						<!-- Each card in the list has a button like the one below. Clicking on the numbers changes the number of copies in the decklist.-->
+						<td><div class="btn-group" data-toggle="buttons">
+							<label class="btn btn-default">
+								<input type="radio" name="cardnum">0
+							</label>
+							<label class="btn btn-default">
+								<input type="radio" name="cardnum">1
+							</label>
+							<label class="btn btn-default">
+								<input type="radio" name="cardnum">2
+							</label>
+							<label class="btn btn-default">
+								<input type="radio" name="cardnum">3
+							</label>						
+						</div></td>
+						<td>Card Name</td>
+						<td>Card Type Icon</td>
+					</tr>
+				</tbody>
+			</table>
+			<!-- Clicking the 'print' button puts the current decklist in printable pdfs. There are libraries for creating pdfs so I'm not freaked about this.-->
+			<button type="button" class="btn btn-primary">Print</button>
+		</div>
+		<!-- Each character has a list of card. Changing the dropdown brings up the cards for the appropriate character--you can click the number buttons just like in the decklist.-->
+		<div class="col-sm-6 col-md-4">
+			<div class="btn-group">
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Character One<span class="caret"></span></button>
+				<ul class="dropdown-menu">
+					<li><a href="#">Character One</a></li>
+					<li><a href="#">Character Two</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="clearfix visible-sm-block"></div>
+		<div class="col-sm-12 col-md-4">
+			<div class="well">
+			<p>Column Three: Text can go here, inside a well, in leiu of card images</p>
+			</div>
+			<img src="Hidden_Watch_Compartment.png" class="img-rounded img-responsive" alt="Ex Im">
+			</div>
+	</div>
+    </div>
+
+
+</body>
+</html>
+
