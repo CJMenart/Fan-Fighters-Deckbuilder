@@ -23,17 +23,9 @@ function init() {
 				cardlist[cnum].cards.push(lines[l]);
 			}
 		}
-		if (DEBUG) {
-			alert("Loaded!");
-		}
+		setCharacterDropdown();
 	}, 'text');
 
-	var cardlistFile = document.getElementById("cardlistFile");
-	var fr = new FileReader();
-	fr.onload = function() {
-		
-	}
-	fr.readAsText(cardlistFile);
 }
 
 function changeCardCount(cardname,count) {
@@ -44,4 +36,27 @@ function changeCardCount(cardname,count) {
 			deck[c].count = count;
 		}
 	}
+}
+
+function setCharacterDropdown() {	
+	dropHTML = '<div class="btn-group">'+
+			'<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Select A Character<span class="caret"></span></button>'+
+			'<ul class="dropdown-menu">';
+	for (var c = 0; c < cardlist.length; c++) {
+		dropHTML += '<li><a href="#" id="character-dropdown>' + cardlist[c].name + '</a></li>';
+	}
+	dropHTML += '</ul></div>';
+	alert(dropHTML);
+	
+	var dropDiv = document.getElementById("character-dropdown");
+	dropDiv.innerHTML = dropHTML;
+
+	
+	//for (var c = 0; c < cardlist.length; c++) {
+	//	$('#character-dropdown-' + c.toString()).click(function(){confirmAction()});
+	//}
+}
+
+function confirmAction() {
+	alert("You done did!");
 }
