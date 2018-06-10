@@ -43,18 +43,17 @@ function setCharacterDropdown() {
 			'<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Select A Character<span class="caret"></span></button>'+
 			'<ul class="dropdown-menu">';
 	for (var c = 0; c < cardlist.length; c++) {
-		dropHTML += '<li><a href="#" id="character-dropdown>' + cardlist[c].name + '</a></li>';
+		dropHTML += '<li><a href="#" id="character-dropdown-' + c.toString() + '">' + cardlist[c].name + '</a></li>';
 	}
 	dropHTML += '</ul></div>';
-	alert(dropHTML);
+	//alert(dropHTML);
 	
 	var dropDiv = document.getElementById("character-dropdown");
 	dropDiv.innerHTML = dropHTML;
-
 	
-	//for (var c = 0; c < cardlist.length; c++) {
-	//	$('#character-dropdown-' + c.toString()).click(function(){confirmAction()});
-	//}
+	for (var c = 0; c < cardlist.length; c++) {
+		$('#character-dropdown-' + c.toString()).click(function(){confirmAction()});
+	}
 }
 
 function confirmAction() {
