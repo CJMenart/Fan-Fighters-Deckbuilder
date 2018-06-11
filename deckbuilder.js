@@ -38,6 +38,12 @@ function changeCardCount(cardname,count) {
 	for (var c = 0; c < deck.length; c++) {
 		if (deck[c].name === cardname) {
 			found = true;
+			//This stops infinite recursion when the toggle event triggers this
+			if (deck[c].count === count) {
+				console.log('no change needed.');
+				return;
+			}
+			
 			if (count === 0) {
 				console.log('Deleting from deck.');
 				deck.splice(c,1);
@@ -61,7 +67,7 @@ function changeCardCount(cardname,count) {
 		document.getElementById('decklist-table').innerHTML += cardSelectionTableRow(cardname,'decklist-card-selection');
 	}
 	
-	//TODO update card count
+	//TODO update total card count
 	console.log(deck);
 }
 
@@ -84,7 +90,6 @@ function setCharacterDropdown() {
 }
 
 //c is index to cardlist
-//TODO: Fetch card names from decklist in case some cards are already in deck
 function setCharacterCardSelection(c) {
 	var selectionHTML = '<table class="table table-hover table-condensed"><tbody>';
 	var cards = cardlist[c].cards;
@@ -108,7 +113,6 @@ function procCardname(cardname) {
 }
 
 function cardSelectionTableRow(cardname,idPrefix) {
-	//TODO add count param or get count from cardlist to preset radio button
 	var count = countInDeck(cardname);
 	return '<tr><td><div class="btn-group" data-toggle="buttons" ' +
 		'id="' + idPrefix + '-' + procCardname(cardname) + '">' +
