@@ -46,8 +46,8 @@ function changeCardCount(cardname,count) {
 			} else {
 				console.log('Updating card in deck.');
 				deck[c].count = count;
-				var toUpdate = document.getElementById('decklist-card-selection-' + count.toString() + '-' + procCardname(cardname));
-				toUpdate.prop("checked", true);
+				//console.log($('#decklist-card-selection-' + count.toString() + '-' + procCardname(cardname)).children().first());
+				$('#decklist-card-selection-' + count.toString() + '-' + procCardname(cardname)).button("toggle");
 			}
 			break;
 		}
