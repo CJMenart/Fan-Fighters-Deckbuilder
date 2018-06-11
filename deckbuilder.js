@@ -33,18 +33,34 @@ function init() {
 function changeCardCount(cardname,count) {
 	console.log('changeCardCount');
 	console.log(count);
+	console.log(cardname);
 	var found = false;
 	for (var c = 0; c < deck.length; c++) {
 		if (deck[c].name === cardname) {
 			found = true;
-			deck[c].count = count;
+			if (count === 0) {
+				console.log('Deleting from deck.');
+				deck.splice(c,1);
+				var toDelete = document.getElementById('decklist-card-selection-' + procCardname(cardname)).parentNode.parentNode;
+				toDelete.parentNode.removeChild(toDelete);
+			} else {
+				console.log('Updating card in deck.');
+				deck[c].count = count;
+				var toUpdate = document.getElementById('decklist-card-selection-' + count.toString() + '-' + procCardname(cardname));
+				toUpdate.prop("checked", true);
+			}
+			break;
 		}
-	}
+	}	
 	if (!found) {
+		console.log('Adding new card to deck.')
+		//Create entry in internal decklist and interface
 		deck.push({'name':cardname,'count':count});
+		document.getElementById('decklist-table').innerHTML += cardSelectionTableRow(cardname,'decklist-card-selection');
 	}
 	
-	//TODO update radio buttons in decklist
+	//TODO update card count
+	console.log(deck);
 }
 
 function setCharacterDropdown() {	
@@ -52,7 +68,7 @@ function setCharacterDropdown() {
 			'<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="character-dropdown-button">Select A Character<span class="caret"></span></button>'+
 			'<ul class="dropdown-menu">';
 	for (var c = 0; c < cardlist.length; c++) {
-		dropHTML += '<li><a href="#" id="character-dropdown-' + c.toString() + '">' + cardlist[c].name + '</a></li>';
+		dropHTML += '<li><a href="#" id="character-dropdown-' + c.toString() + '" name="' + c.toString() + '">' + cardlist[c].name + '</a></li>';
 	}
 	dropHTML += '</ul></div>';
 	
@@ -60,8 +76,8 @@ function setCharacterDropdown() {
 	dropDiv.innerHTML = dropHTML;
 	
 	for (var c = 0; c < cardlist.length; c++) {
-		var num = Number(c);
-		$('#character-dropdown-' + c.toString()).click(function(){setCharacterCardSelection(num)});
+		//var num = Number(c);
+		$('#character-dropdown-' + c.toString()).click(function(){setCharacterCardSelection(parseInt(this.name))});
 	}
 }
 
@@ -71,39 +87,32 @@ function setCharacterCardSelection(c) {
 	var selectionHTML = '<table class="table table-hover table-condensed"><tbody>';
 	var cards = cardlist[c].cards;
 	for (var crd = 0; crd < cards.length; crd++) {
-		selectionHTML += '<tr><td><div class="btn-group" data-toggle="buttons" ' +
-			'id="character-card-selection-' + procCardname(cards[crd]) + '">' +
-			'<label class="btn btn-default" id="character-card-selection-0-' + procCardname(cards[crd]) + '"><input type="radio" name="0" >0</label>' + 
-			'<label class="btn btn-default" id="character-card-selection-1-' + procCardname(cards[crd]) + '"><input type="radio" name="1" >1</label>' + 
-			'<label class="btn btn-default" id="character-card-selection-2-' + procCardname(cards[crd]) + '"><input type="radio" name="2" >2</label>' +
-			'<label class="btn btn-default" id="character-card-selection-3-' + procCardname(cards[crd]) + '"><input type="radio" name="3" >3</label>' +
-			'</div></td>' +
-			'<td>' + cards[crd] + '</td></tr>';
+		selectionHTML += cardSelectionTableRow(cards[crd],'character-card-selection');
 	}
 	selectionHTML += '</tr></tbody></table>';
 	
 	document.getElementById("character-card-selection").innerHTML = selectionHTML;
 	document.getElementById("character-dropdown-button").innerHTML = cardlist[c].name + '<span class="caret"></span>';
 	
-	for (var crd = 0; crd < cards.length; crd++) {
-		/**
-		for (var count = 0; count < MAX_CARD_COPIES; count++) {
-			var countCopy = Number(count); //needed. Is this acting as a closure maybe?
-			var crdCopy = Number(crd);
-			$('#character-card-selection-' + count + '-' + procCardname(cards[crd])).click(function(){ changeCardCount(cards[crdCopy],countCopy)});
-		}**/
-		//var countCopy = Number(count); //needed. Is this acting as a closure maybe?
-		var crdCopy = Number(crd);
+	for (var crd = 0; crd < cards.length; crd++) {		
+		//var cardnameCopy = String(cards[crd]);
 		//console.log($('#character-card-selection-' + procCardname(cards[crd]) + ' :input').length);
-		$('#character-card-selection-' + procCardname(cards[crd]) + ' :input').change(function() { console.log(this.name); changeCardCount(cards[crdCopy], parseInt(this.name));}); // points to the clicked input button
-		
+		$('#character-card-selection-' + procCardname(cards[crd]) + ' :input').change(function() { changeCardCount(this.getAttribute('data-cardname'), parseInt(this.name));}); // points to the clicked input button
 	}
-}
-
-function confirmAction() {
-	alert("You done did!");
 }
 
 function procCardname(cardname) {
 	return cardname.toLowerCase().replace(/ /g,'_');
+}
+
+function cardSelectionTableRow(cardname,idPrefix) {
+	//TODO add count param or get count from cardlist to preset radio button
+	return '<tr><td><div class="btn-group" data-toggle="buttons" ' +
+		'id="' + idPrefix + '-' + procCardname(cardname) + '">' +
+		'<label class="btn btn-default" id="' + idPrefix + '-0-' + procCardname(cardname) + '"><input type="radio" name="0" data-cardname="' + cardname + '">0</label>' + 
+		'<label class="btn btn-default" id="' + idPrefix + '-1-' + procCardname(cardname) + '"><input type="radio" name="1" data-cardname="' + cardname + '">1</label>' + 
+		'<label class="btn btn-default" id="' + idPrefix + '-2-' + procCardname(cardname) + '"><input type="radio" name="2" data-cardname="' + cardname + '">2</label>' +
+		'<label class="btn btn-default" id="' + idPrefix + '-3-' + procCardname(cardname) + '"><input type="radio" name="3" data-cardname="' + cardname + '">3</label>' +
+		'</div></td>' +
+		'<td>' + cardname + '</td></tr>';
 }
