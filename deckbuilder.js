@@ -119,7 +119,7 @@ function setCharacterCardSelection(c) {
 }
 
 function procCardname(cardname) {
-	return cardname.toLowerCase().replace(/ /g,'_');
+	return cardname.toLowerCase().replace(/ /g,'-');
 }
 
 function cardSelectionTableRow(cardname,idPrefix) {
