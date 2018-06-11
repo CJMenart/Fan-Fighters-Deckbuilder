@@ -24,31 +24,11 @@
 	<div class="row">
 		<div class="col-sm-6 col-md-4">
 			<!-- So the page is meant to maintain a list of cards. The list and the number of cards in it will be displayed here.-->
-			<h2>My Decklist    <small>1/30 cards</small></h2>
+			<h2>My Decklist    <small><span id='deck-card-count'>0</span>/30 cards</small></h2>
 			An example table is included below.
 			<!-- No header included on this table -->
 			<table class="table table-hover table-condensed">
 				<tbody id='decklist-table'>
-					<tr>
-						<!-- I believe to make them select they need to be made 'stateful buttons' -->
-						<!-- Each card in the list has a button like the one below. Clicking on the numbers changes the number of copies in the decklist.-->
-						<td><div class="btn-group" data-toggle="buttons">
-							<label class="btn btn-default">
-								<input type="radio" name="cardnum">0
-							</label>
-							<label class="btn btn-default">
-								<input type="radio" name="cardnum">1
-							</label>
-							<label class="btn btn-default">
-								<input type="radio" name="cardnum">2
-							</label>
-							<label class="btn btn-default">
-								<input type="radio" name="cardnum">3
-							</label>						
-						</div></td>
-						<td>Card Name</td>
-						<td>Card Type Icon</td>
-					</tr>
 				</tbody>
 			</table>
 			<!-- Clicking the 'print' button puts the current decklist in printable pdfs. There are libraries for creating pdfs so I'm not freaked about this.-->

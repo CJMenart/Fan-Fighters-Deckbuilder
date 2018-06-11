@@ -2,6 +2,7 @@ var deck;
 var cardlist;
 var DEBUG = true
 var MAX_CARD_COPIES = 3; //TODO not fully utilized
+var deckCardCount = 0;
 
 function init() {
 	deck = [];
@@ -35,9 +36,12 @@ function changeCardCount(cardname,count) {
 	console.log(count);
 	console.log(cardname);
 	var found = false;
+	var deckCountChange = 0;
 	for (var c = 0; c < deck.length; c++) {
 		if (deck[c].name === cardname) {
 			found = true;
+			deckCountChange = count - deck[c].count;
+			
 			//This stops infinite recursion when the toggle event triggers this
 			if (deck[c].count === count) {
 				console.log('no change needed.');
@@ -65,9 +69,14 @@ function changeCardCount(cardname,count) {
 		//Create entry in internal decklist and interface
 		deck.push({'name':cardname,'count':count});
 		document.getElementById('decklist-table').innerHTML += cardSelectionTableRow(cardname,'decklist-card-selection');
+		$('#decklist-card-selection-' + procCardname(cardname) + ' :input').change(function() { changeCardCount(this.getAttribute('data-cardname'), parseInt(this.name));});
+		deckCountChange = count;
 	}
-	
+		
 	//TODO update total card count
+	deckCardCount += deckCountChange;
+	document.getElementById("deck-card-count").innerHTML = deckCardCount.toString();
+	
 	console.log(deck);
 }
 
@@ -101,6 +110,7 @@ function setCharacterCardSelection(c) {
 	document.getElementById("character-card-selection").innerHTML = selectionHTML;
 	document.getElementById("character-dropdown-button").innerHTML = cardlist[c].name + '<span class="caret"></span>';
 	
+	//WARNING: dplicated code in changeNum with deck list because I don't know how to make it single-point...
 	for (var crd = 0; crd < cards.length; crd++) {		
 		//var cardnameCopy = String(cards[crd]);
 		//console.log($('#character-card-selection-' + procCardname(cards[crd]) + ' :input').length);
