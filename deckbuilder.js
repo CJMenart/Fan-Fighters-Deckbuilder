@@ -46,8 +46,10 @@ function changeCardCount(cardname,count) {
 			} else {
 				console.log('Updating card in deck.');
 				deck[c].count = count;
-				//console.log($('#decklist-card-selection-' + count.toString() + '-' + procCardname(cardname)).children().first());
+				//console.log($('#decklist-card-selection-' + count.toString() + '-' + procCardname(cardname)));
 				$('#decklist-card-selection-' + count.toString() + '-' + procCardname(cardname)).button("toggle");
+				//may not find any buttons if char not currently selected
+				$('#character-card-selection-' + count.toString() + '-' + procCardname(cardname)).button("toggle"); 
 			}
 			break;
 		}
@@ -107,12 +109,26 @@ function procCardname(cardname) {
 
 function cardSelectionTableRow(cardname,idPrefix) {
 	//TODO add count param or get count from cardlist to preset radio button
+	var count = countInDeck(cardname);
 	return '<tr><td><div class="btn-group" data-toggle="buttons" ' +
 		'id="' + idPrefix + '-' + procCardname(cardname) + '">' +
-		'<label class="btn btn-default" id="' + idPrefix + '-0-' + procCardname(cardname) + '"><input type="radio" name="0" data-cardname="' + cardname + '">0</label>' + 
-		'<label class="btn btn-default" id="' + idPrefix + '-1-' + procCardname(cardname) + '"><input type="radio" name="1" data-cardname="' + cardname + '">1</label>' + 
-		'<label class="btn btn-default" id="' + idPrefix + '-2-' + procCardname(cardname) + '"><input type="radio" name="2" data-cardname="' + cardname + '">2</label>' +
-		'<label class="btn btn-default" id="' + idPrefix + '-3-' + procCardname(cardname) + '"><input type="radio" name="3" data-cardname="' + cardname + '">3</label>' +
+		'<label class="btn btn-default' + ((count === 0) ? ' active' : '') + '" id="' + idPrefix + '-0-' + procCardname(cardname) + '"><input type="radio" name="0" data-cardname="' + cardname + '"' + ((count === 0) ? ' checked' : '') + '>0</label>' + 
+		'<label class="btn btn-default' + ((count === 1) ? ' active' : '') + '" id="' + idPrefix + '-1-' + procCardname(cardname) + '"><input type="radio" name="1" data-cardname="' + cardname + '"' + ((count === 1) ? ' checked' : '') + '>1</label>' + 
+		'<label class="btn btn-default' + ((count === 2) ? ' active' : '') + '" id="' + idPrefix + '-2-' + procCardname(cardname) + '"><input type="radio" name="2" data-cardname="' + cardname + '"' + ((count === 2) ? ' checked' : '') + '>2</label>' + 
+		'<label class="btn btn-default' + ((count === 3) ? ' active' : '') + '" id="' + idPrefix + '-3-' + procCardname(cardname) + '"><input type="radio" name="3" data-cardname="' + cardname + '"' + ((count === 3) ? ' checked' : '') + '>3</label>' + 
 		'</div></td>' +
 		'<td>' + cardname + '</td></tr>';
+		
+		/**'<label class="btn btn-default" id="' + idPrefix + '-1-' + procCardname(cardname) + '"><input type="radio" name="1" data-cardname="' + cardname + '">1</label>' + 
+		'<label class="btn btn-default" id="' + idPrefix + '-2-' + procCardname(cardname) + '"><input type="radio" name="2" data-cardname="' + cardname + '">2</label>' +
+		'<label class="btn btn-default" id="' + idPrefix + '-3-' + procCardname(cardname) + '"><input type="radio" name="3" data-cardname="' + cardname + '">3</label>' + **/
+}
+
+function countInDeck(cardname) {
+	for (var crd = 0; crd < deck.length; crd++) {
+		if (deck[crd].name === cardname) {
+			return deck[crd].count;
+		}
+	}
+	return 0;
 }
