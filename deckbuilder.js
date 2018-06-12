@@ -131,11 +131,16 @@ function cardSelectionTableRow(cardname,idPrefix) {
 		'<label class="btn btn-default' + ((count === 2) ? ' active' : '') + '" id="' + idPrefix + '-2-' + procCardname(cardname) + '"><input type="radio" name="2" data-cardname="' + cardname + '"' + ((count === 2) ? ' checked' : '') + '>2</label>' + 
 		'<label class="btn btn-default' + ((count === 3) ? ' active' : '') + '" id="' + idPrefix + '-3-' + procCardname(cardname) + '"><input type="radio" name="3" data-cardname="' + cardname + '"' + ((count === 3) ? ' checked' : '') + '>3</label>' + 
 		'</div></td>' +
-		'<td>' + cardname + '</td></tr>';
+		'<td><a href="#" onclick="displayImage(\'' + cardname + '\')">' + cardname + '</a></td></tr>';
 		
 		/**'<label class="btn btn-default" id="' + idPrefix + '-1-' + procCardname(cardname) + '"><input type="radio" name="1" data-cardname="' + cardname + '">1</label>' + 
 		'<label class="btn btn-default" id="' + idPrefix + '-2-' + procCardname(cardname) + '"><input type="radio" name="2" data-cardname="' + cardname + '">2</label>' +
 		'<label class="btn btn-default" id="' + idPrefix + '-3-' + procCardname(cardname) + '"><input type="radio" name="3" data-cardname="' + cardname + '">3</label>' + **/
+}
+
+function displayImage(cardname) {
+	imgHTML = '<img src="Card Images/' + procCardname(cardname) + '.png" class="img-rounded img-responsive" alt="Card image could not be displayed.">';
+	document.getElementById('display-panel').innerHTML = imgHTML;
 }
 
 function countInDeck(cardname) {
